@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mssql-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mssql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Un!q@to2023"
+      ACCEPT_EULA: "Y"
+  nginx-php:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx-php
+    ports:
+      - "80:80"
+    depends_on:
+      - mssql-server

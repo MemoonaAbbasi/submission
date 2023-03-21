@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/mssql/server:latest
+
+ENV MSSQL_SA_PASSWORD=Un!q@to2023 \
+    MSSQL_PID=Developer \
+    ACCEPT_EULA=Y
+
+COPY ./setup.sql /usr/src/setup.sql
+
+RUN /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $MSSQL_SA_PASSWORD -i /usr/src/setup.sql
+
+EXPOSE 1433
+
+CMD ["/opt/mssql/bin/sqlservr"]
